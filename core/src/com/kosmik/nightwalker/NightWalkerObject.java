@@ -20,7 +20,7 @@ public class NightWalkerObject extends NightObject {
     private OrthographicCamera camera;
 
     protected Boolean isGameOver=false;
-    protected float time=0;
+    protected static long creationTime;
 
 
     public NightWalkerObject(Texture texture, float x, float y, OrthographicCamera camera, Batch batch) {
@@ -32,7 +32,6 @@ public class NightWalkerObject extends NightObject {
     @Override
     public void update(SpriteBatch batch) {
         super.update(batch);
-        //time= TimeUtils.millis()/60;
     }
 
     public void handleInput() {

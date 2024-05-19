@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Vector3;
 public class NightObject  {
     protected Sprite sprite;
     private float targetRotation;
-    private float moveX;
-    private float moveY;
+    protected float moveX;
+    protected float moveY;
     private Batch batch;
     protected Boolean isDeath=false;
 
@@ -31,7 +31,7 @@ public class NightObject  {
                 animationFrames[index++] = explosionFrames[i][j];
             }
         }
-        float frameDuration = 0.05f;
+        float frameDuration = 0.1f;
         explosionAnimation = new Animation<>(frameDuration, animationFrames);
         stateTime = 0;
 
@@ -47,7 +47,7 @@ public class NightObject  {
             stateTime += Gdx.graphics.getDeltaTime();
             TextureRegion currentFrame = explosionAnimation.getKeyFrame(stateTime, false);
             batch.begin();
-            batch.draw(currentFrame, sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+            batch.draw(currentFrame, sprite.getX()-sprite.getWidth()/2, sprite.getY()-sprite.getHeight()/2, 768, 665);
             batch.end();
 
 
