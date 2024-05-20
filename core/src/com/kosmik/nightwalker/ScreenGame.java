@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -27,6 +28,7 @@ public class ScreenGame implements Screen {
     private long timeSpawnLastEnemy, timeSpawnEnemyInterval = 15000;
     private long timeSpawnLastClouds, timeSpawnCloudsInterval = 1000;
     private BitmapFont font;
+    private Texture BackImg;
 
     private float time;
 
@@ -40,6 +42,7 @@ public class ScreenGame implements Screen {
         time=nightWalker.time;
 
         Texture texture = new Texture("NightWalker.png");
+        BackImg=new Texture("BackButton.png");
 
         nightWalkerObject = new NightWalkerObject(texture, Gdx.graphics.getWidth() / 2 - texture.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2 - texture.getHeight() / 2,camera,batch);
@@ -87,22 +90,20 @@ public class ScreenGame implements Screen {
             nightWalkerObject.handleInput();
 
         } else {
-
+            nightbombobject.clear();
+            nightWalkerObject.sprite.setPosition(Gdx.graphics.getWidth() / 2 - nightWalkerObject.sprite.getWidth() / 2,
+                    Gdx.graphics.getHeight() / 2 - nightWalkerObject.sprite.getHeight() / 2);
+            nightWalkerObject.sprite.setRotation(0);
+            nightWalkerObject.moveX=0;
+            nightWalkerObject.moveY=0;
             batch.begin();
-
             font.getData().setScale(5f);
             font.draw(batch,"Your time:"+String.format("%.1f",time)+"s", nightWalkerObject.getX()-nightWalkerObject.sprite.getWidth(), nightWalkerObject.getY()+300, Gdx.graphics.getWidth()+250, Align.center, true);
             font.getData().setScale(3f);
             font.draw(batch,"Tap to restart",nightWalkerObject.getX()-nightWalkerObject.sprite.getWidth() ,nightWalkerObject.getY()-50, Gdx.graphics.getWidth()+250, Align.center, true);
             batch.end();
 
-            if(Gdx.input.justTouched()){
-                nightbombobject.clear();
-                nightWalkerObject.sprite.setPosition(Gdx.graphics.getWidth() / 2 - nightWalkerObject.sprite.getWidth() / 2,
-                        Gdx.graphics.getHeight() / 2 - nightWalkerObject.sprite.getHeight() / 2);
-                nightWalkerObject.sprite.setRotation(0);
-                nightWalkerObject.moveX=0;
-                nightWalkerObject.moveY=0;
+            if(Gdx.input.isTouched()){
                 timeSpawnLastEnemy = 15000;
                 timeSpawnEnemyInterval = 15000;
                 nightWalkerObject.creationTime = TimeUtils.millis();
