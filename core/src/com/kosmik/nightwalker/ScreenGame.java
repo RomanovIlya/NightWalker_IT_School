@@ -78,6 +78,24 @@ public class ScreenGame implements Screen {
         camera.position.set(nightWalkerObject.getX() + nightWalkerObject.sprite.getWidth() / 2, nightWalkerObject.getY() , 0);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
+        for (int i=0;i<nightbombobject.size;i++){
+            nightWalkerObject.death(nightbombobject.get(i));
+            nightbombobject.get(i).update(batch);
+            for (int d=0;d<nightbombobject.size;d++)
+            {
+                if(d>i || d<i){nightbombobject.get(i).death(nightbombobject.get(d));}
+            }
+            nightbombobject.get(i).moveToenemy(nightWalkerObject.getX() + nightWalkerObject.sprite.getWidth() / 2, nightWalkerObject.getY() + nightWalkerObject.sprite.getHeight() / 2);
+            if (nightbombobject.get(i).isDeath){
+                nightbombobject.removeIndex(i);
+            }
+        }
+        for(int i=0;i<nightClouds.size;i++){
+            nightClouds.get(i).update();
+            if(nightClouds.get(i).outOfvision(nightWalkerObject.getX(), nightWalkerObject.getY())){
+                nightClouds.removeIndex(i);
+            }
+        }
         nightWalkerObject.update(batch);
         if (!nightWalkerObject.isGameOver){
             time=  (TimeUtils.millis()-NightWalkerObject.creationTime)/1000.0f;
@@ -90,12 +108,8 @@ public class ScreenGame implements Screen {
             nightWalkerObject.handleInput();
 
         } else {
+
             nightbombobject.clear();
-            nightWalkerObject.sprite.setPosition(Gdx.graphics.getWidth() / 2 - nightWalkerObject.sprite.getWidth() / 2,
-                    Gdx.graphics.getHeight() / 2 - nightWalkerObject.sprite.getHeight() / 2);
-            nightWalkerObject.sprite.setRotation(0);
-            nightWalkerObject.moveX=0;
-            nightWalkerObject.moveY=0;
             batch.begin();
             font.getData().setScale(5f);
             font.draw(batch,"Your time:"+String.format("%.1f",time)+"s", nightWalkerObject.getX()-nightWalkerObject.sprite.getWidth(), nightWalkerObject.getY()+300, Gdx.graphics.getWidth()+250, Align.center, true);
@@ -103,7 +117,12 @@ public class ScreenGame implements Screen {
             font.draw(batch,"Tap to restart",nightWalkerObject.getX()-nightWalkerObject.sprite.getWidth() ,nightWalkerObject.getY()-50, Gdx.graphics.getWidth()+250, Align.center, true);
             batch.end();
 
-            if(Gdx.input.isTouched()){
+            if(Gdx.input.justTouched()){
+                nightWalkerObject.sprite.setPosition(Gdx.graphics.getWidth() / 2 - nightWalkerObject.sprite.getWidth() / 2,
+                        Gdx.graphics.getHeight() / 2 - nightWalkerObject.sprite.getHeight() / 2);
+                nightWalkerObject.sprite.setRotation(0);
+                nightWalkerObject.moveX=0;
+                nightWalkerObject.moveY=0;
                 timeSpawnLastEnemy = 15000;
                 timeSpawnEnemyInterval = 15000;
                 nightWalkerObject.creationTime = TimeUtils.millis();
@@ -112,26 +131,7 @@ public class ScreenGame implements Screen {
 
                }
         }
-        for (int i=0;i<nightbombobject.size;i++){
-            nightWalkerObject.death(nightbombobject.get(i));
-            nightbombobject.get(i).update(batch);
-            for (int d=0;d<nightbombobject.size;d++)
-            {
-                if(d>i || d<i){nightbombobject.get(i).death(nightbombobject.get(d));}
-            }
-            nightbombobject.get(i).moveToenemy(nightWalkerObject.getX() + nightWalkerObject.sprite.getWidth() / 2, nightWalkerObject.getY() + nightWalkerObject.sprite.getHeight() / 2);
-            if (nightbombobject.get(i).isDeath){
-                nightbombobject.get(i).dispose();
-                nightbombobject.removeIndex(i);
-            }
-        }
-        for(int i=0;i<nightClouds.size;i++){
-            nightClouds.get(i).update();
-            if(nightClouds.get(i).outOfvision(nightWalkerObject.getX(), nightWalkerObject.getY())){
-                nightClouds.get(i).dispose();
-                nightClouds.removeIndex(i);
-            }
-        }
+
 
 
 

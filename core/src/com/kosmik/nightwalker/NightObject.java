@@ -31,7 +31,7 @@ public class NightObject  {
                 animationFrames[index++] = explosionFrames[i][j];
             }
         }
-        float frameDuration = 0.1f;
+        float frameDuration = 0.05f;
         explosionAnimation = new Animation<>(frameDuration, animationFrames);
         stateTime = 0;
 
@@ -82,7 +82,8 @@ public class NightObject  {
     public float getY(){
         return sprite.getY();
     }
-    public boolean death(NightObject o)  {
+    public boolean death(NightObject o)
+    {
         if(Math.abs(getX()-o.getX()) < sprite.getWidth()/3 + o.sprite.getWidth()/2 & Math.abs(getY()-o.getY()) < sprite.getHeight()/3 + o.sprite.getHeight()/3 & !o.isDeath){
             isDeath=true;
             o.isDeath=true;
