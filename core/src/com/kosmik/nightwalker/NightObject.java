@@ -22,7 +22,7 @@ public class NightObject  {
         sprite = new Sprite(texture);
         sprite.setPosition(x, y);
         this.batch=batch;
-        Texture explosionSheet = new Texture("Exploed.png"); // Загрузите изображение анимации взрыва
+        Texture explosionSheet = new Texture("Exploed.png");
         TextureRegion[][] explosionFrames = TextureRegion.split(explosionSheet, 738, 665);
         TextureRegion[] animationFrames = new TextureRegion[explosionFrames.length * explosionFrames[0].length];
         int index = 0;
