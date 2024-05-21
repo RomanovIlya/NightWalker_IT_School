@@ -16,7 +16,7 @@ public class NightBombObject extends NightObject {
 
     public void moveToenemy(float x,float y) {
         enemyPos.set(x, y, 0);
-        moveTo(enemyPos,100,245);
+        moveTo(enemyPos,1000,245);
 
 
     }
