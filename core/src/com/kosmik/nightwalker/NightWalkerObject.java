@@ -23,8 +23,8 @@ public class NightWalkerObject extends NightObject {
     protected static long creationTime;
 
 
-    public NightWalkerObject(Texture texture, float x, float y, OrthographicCamera camera, Batch batch) {
-        super(texture,x,y,batch);
+    public NightWalkerObject(Texture texture, float x, float y, OrthographicCamera camera, Batch batch,Texture explosionSheet) {
+        super(texture,x,y,batch,explosionSheet);
         touchPos = new Vector3();
         this.camera=camera;
     }

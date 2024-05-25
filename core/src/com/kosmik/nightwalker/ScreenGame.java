@@ -29,7 +29,7 @@ public class ScreenGame implements Screen {
     private long timeSpawnLastClouds, timeSpawnCloudsInterval = 1000;
     private BitmapFont font;
     private Texture BackImg;
-
+    Texture explosionSheet;
     private float time;
 
 
@@ -40,12 +40,13 @@ public class ScreenGame implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         font=nightWalker.font;
         time=nightWalker.time;
+        explosionSheet = new Texture("Exploed.png");
 
         Texture texture = new Texture("NightWalker.png");
         BackImg=new Texture("BackButton.png");
 
         nightWalkerObject = new NightWalkerObject(texture, Gdx.graphics.getWidth() / 2 - texture.getWidth() / 2,
-                Gdx.graphics.getHeight() / 2 - texture.getHeight() / 2,camera,batch);
+                Gdx.graphics.getHeight() / 2 - texture.getHeight() / 2,camera,batch,explosionSheet);
         nightWalkerObject.creationTime = TimeUtils.millis();
 
 
@@ -86,9 +87,6 @@ public class ScreenGame implements Screen {
                 if(d>i || d<i){nightbombobject.get(i).death(nightbombobject.get(d));}
             }
             nightbombobject.get(i).moveToenemy(nightWalkerObject.getX() + nightWalkerObject.sprite.getWidth() / 2, nightWalkerObject.getY() + nightWalkerObject.sprite.getHeight() / 2);
-            if (nightbombobject.get(i).isDeath){
-                nightbombobject.removeIndex(i);
-            }
         }
         for(int i=0;i<nightClouds.size;i++){
             nightClouds.get(i).update();
@@ -162,8 +160,8 @@ public class ScreenGame implements Screen {
             float i=nightWalkerObject.getX()+MathUtils.random(-5000,5000);
             if (i>nightWalkerObject.getX()+999 || i<nightWalkerObject.getX()-999) {
                 timeSpawnLastEnemy = TimeUtils.millis();
-                timeSpawnEnemyInterval -= 1;
-                nightbombobject.add(new NightBombObject(new Texture("Bomb.png"), i, nightWalkerObject.getY() + MathUtils.random(-5000, 5000), batch));
+                timeSpawnEnemyInterval -= 10;
+                nightbombobject.add(new NightBombObject(new Texture("Bomb.png"), i, nightWalkerObject.getY() + MathUtils.random(-5000, 5000), batch,explosionSheet));
             }
             else {
                 spawnEnemy();

@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 public class NightBombObject extends NightObject {
     private Vector3 enemyPos;
 
-    public NightBombObject(Texture texture, float x, float y, Batch batch) {
-        super(texture,x, y,batch);
+    public NightBombObject(Texture texture, float x, float y, Batch batch,Texture explosionSheet) {
+        super(texture,x, y,batch,explosionSheet);
         enemyPos=new Vector3();
 
     }
@@ -16,7 +16,7 @@ public class NightBombObject extends NightObject {
 
     public void moveToenemy(float x,float y) {
         enemyPos.set(x, y, 0);
-        moveTo(enemyPos,1000,245);
+        moveTo(enemyPos,1250,300);
 
 
     }
